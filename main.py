@@ -54,6 +54,29 @@ def create_app():
             else:
                 return "formulaire_prospect.html not found", 404
 
+    @app.route('/test-email')
+    def test_email():
+    from src.routes.prospect import send_prospect_email
+
+    data_test = {
+        "nom": "Test",
+        "prenom": "Email",
+        "tel": "0000000000",
+        "email": "test@example.com",
+        "preferenceContact": "indifferent",
+        "joursPreference": ["Lundi", "Mardi"],
+        "trancheHoraire": "Matin",
+        "consentementRGPD": True,
+        "consentementMarketing": False
+    }
+
+    success = send_prospect_email(data_test)
+
+    if success:
+        return "✅ Email envoyé avec succès !"
+    else:
+        return "❌ Échec de l'envoi de l'email."
+
     return app
 
 if __name__ == '__main__':
