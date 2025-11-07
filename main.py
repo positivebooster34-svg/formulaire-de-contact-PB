@@ -38,6 +38,13 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+    # Enregistrement des blueprints
+    from src.routes.user import user_bp
+    from src.routes.prospect import prospect_bp
+    app.register_blueprint(user_bp, url_prefix='/api')
+    app.register_blueprint(prospect_bp, url_prefix='/api')
+
+    # Route de test
     @app.route('/test-email')
     def test_email():
         from src.routes.prospect import send_prospect_email
@@ -57,7 +64,23 @@ def create_app():
             return "✅ Email envoyé avec succès !"
         else:
             return "❌ Échec de l'envoi de l'email."
-    
+
+    # Route serve    
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def serve(path):
+        static_folder_path = app.static_folder
+        if static_folder_path is None:
+            return "Static folder not configured", 404
+        if path != "" and os.path.exists(os.path.join(static_folder_path, path)):
+            return send_from_directory(static_folder_path, path)
+        else:
+            index_path = os.path.join(static_folder_path, 'formulaire_prospect.html')
+            if os.path.exists(index_path):
+                return send_from_directory(static_folder_path, 'formulaire_prospect.html')
+            else:
+                return "formulaire_prospect.html not found", 404
+
     return app   
 
 if __name__ == '__main__':
