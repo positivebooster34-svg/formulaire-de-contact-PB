@@ -72,12 +72,12 @@ def create_app():
 
         success = send_prospect_email(data_test)
 
-        if success:
-        return "✅ Email envoyé avec succès !"
+     if success:
+     return "✅ Email envoyé avec succès !"
         else:
-        return "❌ Échec de l'envoi de l'email."
+     return "❌ Échec de l'envoi de l'email."
 
-    return app
+   return app
 
 if __name__ == '__main__':
     app = create_app()
