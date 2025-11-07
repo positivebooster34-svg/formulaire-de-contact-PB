@@ -1,0 +1,8 @@
+yaml
+services:
+  - type: web
+    name: formulaire-de-contact-flask
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    autoDeploy: true

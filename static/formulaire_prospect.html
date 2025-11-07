@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Contact Prospect - Conforme RGPD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Formulaire de Recueil de Coordonnées</h1>
+            <p class="intro">Nous respectons votre vie privée et traitons vos données conformément au RGPD.</p>
+        </header>
+
+        <form id="prospectForm" novalidate autocomplete="off">
+            <section class="coordonnees">
+                <h2>Vos coordonnées</h2>
+                
+                <div class="form-group">
+                    <label for="nom">Nom <span class="required">*</span></label>
+                    <input type="text" id="nom" name="nom" required minlength="2" maxlength="50" 
+                           aria-describedby="nom-error" autocomplete="family-name">
+                    <div id="nom-error" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="prenom">Prénom <span class="required">*</span></label>
+                    <input type="text" id="prenom" name="prenom" required minlength="2" maxlength="50" 
+                           aria-describedby="prenom-error" autocomplete="given-name">
+                    <div id="prenom-error" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tel">Téléphone <span class="required">*</span></label>
+                    <input type="tel" id="tel" name="tel" required 
+                           pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" 
+                           placeholder="Ex: 01 23 45 67 89" 
+                           aria-describedby="tel-error" autocomplete="tel">
+                    <div id="tel-error" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required maxlength="100" 
+                           aria-describedby="email-error" autocomplete="email">
+                    <div id="email-error" class="error-message" role="alert"></div>
+                </div>
+            </section>
+
+            <section class="preferences">
+                <h2>Préférences de contact</h2>
+                
+                <fieldset class="form-group">
+                    <legend>Comment préférez-vous être contacté(e) ? <span class="required">*</span></legend>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="contactMail" name="preferenceContact" value="mail" required>
+                            <label for="contactMail">Par Email</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="contactTel" name="preferenceContact" value="tel" required>
+                            <label for="contactTel">Par Téléphone</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="contactIndifferent" name="preferenceContact" value="indifferent" required>
+                            <label for="contactIndifferent">Indifférent</label>
+                        </div>
+                    </div>
+                    <div id="preference-error" class="error-message" role="alert"></div>
+                </fieldset>
+
+                <div id="preferencesTel" class="conditional-section hidden">
+                    <fieldset class="form-group">
+                        <legend>Jours de préférence pour le contact téléphonique</legend>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="jourLun" name="joursPreference" value="Lundi">
+                                <label for="jourLun">Lundi</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="jourMar" name="joursPreference" value="Mardi">
+                                <label for="jourMar">Mardi</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="jourMer" name="joursPreference" value="Mercredi">
+                                <label for="jourMer">Mercredi</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="jourJeu" name="joursPreference" value="Jeudi">
+                                <label for="jourJeu">Jeudi</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="jourVen" name="joursPreference" value="Vendredi">
+                                <label for="jourVen">Vendredi</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <label for="trancheHoraire">Tranche horaire de préférence</label>
+                        <select id="trancheHoraire" name="trancheHoraire">
+                            <option value="">-- Veuillez choisir --</option>
+                            <option value="matin">Matin (9h-12h)</option>
+                            <option value="apresmidi">Après-midi (14h-17h)</option>
+                            <option value="soiree">Soirée (17h-19h)</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="rgpd-section">
+                <h2>Protection des données personnelles</h2>
+                
+                <div class="info-rgpd">
+                    <h3>Finalité du traitement</h3>
+                    <p>Vos données sont collectées dans le but de vous recontacter concernant nos services.</p>
+                    
+                    <h3>Base légale</h3>
+                    <p>Le traitement est fondé sur votre consentement libre et éclairé.</p>
+                    
+                    <h3>Vos droits</h3>
+                    <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de portabilité, de limitation du traitement et d'opposition. Pour exercer ces droits, contactez-nous à l'adresse : <strong>contact@entreprise.com</strong></p>
+                    
+                    <h3>Conservation des données</h3>
+                    <p>Vos données seront conservées pendant 3 ans maximum à compter de notre dernier contact.</p>
+                </div>
+
+                <div class="form-group consent-group">
+                    <input type="checkbox" id="consentementRGPD" name="consentementRGPD" required 
+                           aria-describedby="consent-error">
+                    <label for="consentementRGPD">
+                        <span class="required">*</span> J'accepte que mes données personnelles soient collectées et traitées conformément aux informations ci-dessus et à la <a href="politique-confidentialite.html" target="_blank">politique de confidentialité</a>.
+                    </label>
+                    <div id="consent-error" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group consent-group">
+                    <input type="checkbox" id="consentementMarketing" name="consentementMarketing">
+                    <label for="consentementMarketing">
+                        J'accepte de recevoir des informations commerciales par email (optionnel).
+                    </label>
+                </div>
+            </section>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Envoyer ma demande</button>
+                <p class="required-note"><span class="required">*</span> Champs obligatoires</p>
+            </div>
+        </form>
+
+        <div id="successMessage" class="success-message hidden">
+            <h2>Merci !</h2>
+            <p>Votre demande a été envoyée avec succès. Nous vous recontacterons selon vos préférences.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
