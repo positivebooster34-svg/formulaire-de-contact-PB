@@ -77,6 +77,7 @@ def create_app():
     else:
         return "❌ Échec de l'envoi de l'email."
 
+    
     return app
 
 if __name__ == '__main__':
