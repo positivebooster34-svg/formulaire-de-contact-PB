@@ -6,7 +6,7 @@ from src.extensions import mail
 import json
 import socket
 
-prospect_bp = Blueprint('prospect', __name__)
+prospect_bp = Blueprint('prospect_routes', __name__)
 
 def send_prospect_email(data):
     """Envoie un email de notification pour un nouveau prospect."""
