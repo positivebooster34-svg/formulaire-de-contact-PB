@@ -9,7 +9,7 @@ from src.extensions import mail
 
 def create_app():
     app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
-    app.config['SECRET_KEY'] = 'asdf#FGSgvasgf$5$WGT'
+    app.config['SENDGRID_API_KEY'] = os.environ.get('SENDGRID_API_KEY')
     
     # Configuration de Flask-Mail
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
