@@ -37,9 +37,26 @@ def create_app():
     app.register_blueprint(user_bp, url_prefix='/api')
     app.register_blueprint(prospect_bp, url_prefix='/api')
     
+    # Route de test
     @app.route('/test-email')
     def test_email():
-         return "✅ LA ROUTE TEST FONCTIONNE !", 200
+        from src.routes.prospect import send_prospect_email
+        data_test = {
+            "nom": "Test",
+            "prenom": "Email",
+            "tel": "0000000000",
+            "email": "test@example.com",
+            "preferenceContact": "indifferent",
+            "joursPreference": ["Lundi", "Mardi"],
+            "trancheHoraire": "Matin",
+            "consentementRGPD": True,
+            "consentementMarketing": False
+        }
+        success = send_prospect_email(data_test)
+        if success:
+            return "✅ Email envoyé avec succès !"
+        else:
+            return "❌ Échec de l'envoi de l'email."@app.route('/test-email')
     
     # Route serve    
     @app.route('/', defaults={'path': ''})
