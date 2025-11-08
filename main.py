@@ -56,7 +56,7 @@ def create_app():
         if success:
             return "✅ Email envoyé avec succès !"
         else:
-            return "❌ Échec de l'envoi de l'email."@app.route('/test-email')
+            return "❌ Échec de l'envoi de l'email."
     
     # Route serve    
     @app.route('/', defaults={'path': ''})
@@ -80,4 +80,3 @@ if __name__ == '__main__':
     app = create_app()
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
-
