@@ -13,13 +13,13 @@ def create_app():
     
     # Configuration de Flask-Mail
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USE_SSL'] = True
     app.config['MAIL_USERNAME'] = 'positivebooster34@gmail.com'
     app.config['MAIL_PASSWORD'] = 'hyhrslqgejefulcf'
     app.config['MAIL_DEFAULT_SENDER'] = 'positivebooster34@gmail.com'
     mail.init_app(app)
-    
+
     # Activer CORS pour permettre les requêtes depuis le frontend
     CORS(app)
     
