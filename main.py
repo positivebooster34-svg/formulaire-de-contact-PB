@@ -40,23 +40,19 @@ def create_app():
     # Route de test
     @app.route('/test-email')
     def test_email():
-        from src.routes.prospect import send_prospect_email
-        data_test = {
-            "nom": "Test",
-            "prenom": "Email",
-            "tel": "0000000000",
-            "email": "test@example.com",
-            "preferenceContact": "indifferent",
-            "joursPreference": ["Lundi", "Mardi"],
-            "trancheHoraire": "Matin",
-            "consentementRGPD": True,
-            "consentementMarketing": False
-        }
-        success = send_prospect_email(data_test)
-        if success:
-            return "✅ Email envoyé avec succès !"
-        else:
-            return "❌ Échec de l'envoi de l'email."
+        from flask_mail import Message
+        
+        # Test direct de l'envoi d'email
+        try:
+            msg = Message(
+                subject="[TEST] Email de test",
+                recipients=['positivebooster34@gmail.com'],
+                body="Ceci est un email de test depuis Render."
+            )
+            mail.send(msg)
+            return "✅ Email envoyé avec succès directement !"
+        except Exception as e:
+            return f"❌ Erreur détaillée : {type(e).__name__} - {str(e)}"
     
     # Route serve    
     @app.route('/', defaults={'path': ''})
