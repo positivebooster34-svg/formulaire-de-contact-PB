@@ -32,45 +32,58 @@ def create_app():
         db.create_all()
     
     # ✅ Enregistrement des blueprints UNE SEULE FOIS
-    from src.routes.user import user_bp
-    from src.routes.prospect import prospect_bp
-    app.register_blueprint(user_bp, url_prefix='/api')
-    app.register_blueprint(prospect_bp, url_prefix='/api')
+from src.routes.user import user_bp
+from src.routes.prospect import prospect_bp
+app.register_blueprint(user_bp, url_prefix='/api')
+app.register_blueprint(prospect_bp, url_prefix='/api')
+
+# Route de test
+@app.route('/test-email')
+def test_email():
+    from sendgrid import SendGridAPIClient
+    from sendgrid.helpers.mail import Mail
     
-    # Route de test
-    @app.route('/test-email')
-    def test_email():
-        from flask_mail import Message
+    try:
+        # Vérifier que la clé existe
+        api_key = app.config.get('SENDGRID_API_KEY')
+        if not api_key:
+            return "❌ SENDGRID_API_KEY n'est pas configurée"
         
-        # Test direct de l'envoi d'email
-        try:
-            msg = Message(
-                subject="[TEST] Email de test",
-                recipients=['positivebooster34@gmail.com'],
-                body="Ceci est un email de test depuis Render."
-            )
-            mail.send(msg)
-            return "✅ Email envoyé avec succès directement !"
-        except Exception as e:
-            return f"❌ Erreur détaillée : {type(e).__name__} - {str(e)}"
-    
-    # Route serve    
-    @app.route('/', defaults={'path': ''})
-    @app.route('/<path:path>')
-    def serve(path):
-        static_folder_path = app.static_folder
-        if static_folder_path is None:
-            return "Static folder not configured", 404
-        if path != "" and os.path.exists(os.path.join(static_folder_path, path)):
-            return send_from_directory(static_folder_path, path)
+        if not api_key.startswith('SG.'):
+            return f"❌ La clé API ne semble pas valide : {api_key[:10]}..."
+        
+        message = Mail(
+            from_email='positivebooster34@gmail.com',
+            to_emails='positivebooster34@gmail.com',
+            subject='[TEST] Email de test depuis Render',
+            plain_text_content='Ceci est un test SendGrid depuis Render !'
+        )
+        
+        sg = SendGridAPIClient(api_key)
+        response = sg.send(message)
+        return f"✅ Email envoyé avec succès ! Status: {response.status_code}"
+    except Exception as e:
+        import traceback
+        error_detail = traceback.format_exc()
+        return f"❌ Erreur : {type(e).__name__} - {str(e)}<br><br>Détails:<br><pre>{error_detail}</pre>"
+
+# Route serve    
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    static_folder_path = app.static_folder
+    if static_folder_path is None:
+        return "Static folder not configured", 404
+    if path != "" and os.path.exists(os.path.join(static_folder_path, path)):
+        return send_from_directory(static_folder_path, path)
+    else:
+        index_path = os.path.join(static_folder_path, 'formulaire_prospect.html')
+        if os.path.exists(index_path):
+            return send_from_directory(static_folder_path, 'formulaire_prospect.html')
         else:
-            index_path = os.path.join(static_folder_path, 'formulaire_prospect.html')
-            if os.path.exists(index_path):
-                return send_from_directory(static_folder_path, 'formulaire_prospect.html')
-            else:
-                return "formulaire_prospect.html not found", 404
-    
-    return app   
+            return "formulaire_prospect.html not found", 404
+
+return app   
 
 if __name__ == '__main__':
     app = create_app()
